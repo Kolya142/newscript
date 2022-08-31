@@ -1,0 +1,9 @@
+set n1 input n1:
+set n2 input n2:
+set w input what:
+if w == + n1 += n2
+if w == - n1 -= n2
+if w == / n1 /= n2
+if w == * n1 *= n2
+show n1
+end
