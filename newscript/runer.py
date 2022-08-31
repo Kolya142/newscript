@@ -7,6 +7,12 @@ def run(sp):
         elif sp[0] == "set":
             if sp[2] == "input":
                 sp[2] = input(sp[3])
+            if sp[2] == "open":
+                sp[2] = open(sp[3], sp[4])
+            if sp[2] == "\\n":
+              sp[2] = "\n"
+            if sp[2] == "read":
+              sp[2] = cons[sp[3]].read()
             cons[sp[1]] = sp[2]
         elif sp[0] == "show":
             if sp[1] == "%":
@@ -47,33 +53,34 @@ def run(sp):
         elif sp[0] == "load":
             import os
             os.system("nsload " + sp[1])
+        elif sp[1] == "write":
+            if sp[2] == "%":
+              sp[2] = cons[sp[3]]
+            cons[sp[0]].write(sp[2])
         elif sp[0] in cons:
             if len(sp) > 1:
+              if sp[4] == "int":
                 if sp[2] == "%":
-                    sp[2] = sp[3]
-                    if sp[1] == "+=":
-                        cons[sp[0]] = str(int(cons[sp[2]]) + int(cons[sp[0]]))
-                    elif sp[1] == "-=":
-                        cons[sp[0]] = str(int(cons[sp[2]]) - int(cons[sp[0]]))
-                    elif sp[1] == "*=":
-                        cons[sp[0]] = str(int(cons[sp[2]]) * int(cons[sp[0]]))
-                    elif sp[1] == "/=":
-                        cons[sp[0]] = str(int(cons[sp[2]]) / int(cons[sp[0]]))
-                    else:
-                        raise v.newscript_error(f'{sp} is not True',"run_machine")
+                  sp[2] = sp[3]
+                if sp[1] == "+=":
+                    cons[sp[0]] = str(int(cons[sp[2]]) + int(cons[sp[0]]))
+                elif sp[1] == "-=":
+                    cons[sp[0]] = str(int(cons[sp[2]]) - int(cons[sp[0]]))
+                elif sp[1] == "*=":
+                    cons[sp[0]] = str(int(cons[sp[2]]) * int(cons[sp[0]]))
+                elif sp[1] == "/=":
+                    cons[sp[0]] = str(int(cons[sp[2]]) / int(cons[sp[0]]))
                 else:
-                    if sp[1] == "+=":
-                        cons[sp[0]] = str(int(sp[2]) + int(cons[sp[0]]))
-                    elif sp[1] == "-=":
-                        cons[sp[0]] = str(int(sp[2]) - int(cons[sp[0]]))
-                    elif sp[1] == "*=":
-                        cons[sp[0]] = str(int(sp[2]) * int(cons[sp[0]]))
-                    elif sp[1] == "/=":
-                        cons[sp[0]] = str(int(sp[2]) / int(cons[sp[0]]))
-                    else:
-                        raise v.newscript_error(f'{sp} is not True',"run_machine")
+                    raise v.newscript_error(f'{sp} is not True',"run_machine")
+              elif sp[4] == "str":
+                if sp[1] == "+=":
+                  if sp[2] == "%":
+                    sp[2] = cons[sp[3]]
+                  cons[sp[0]] += sp[2]
+                else:
+                  raise v.newscript_error(f'{sp} is not True',"run_machine")
             else:
-                print(sp[0])
+                print(cons[sp[0]])
         elif sp[0] == "help":
             print(v.__help__)
         else:
