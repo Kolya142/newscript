@@ -39,7 +39,6 @@ __help__ = """
     n *= 2 . int
     
     // load script.ns
-    // work only on windows
     load main1.ns
     
     // run
